@@ -4,6 +4,199 @@ YOURLS Changelog
 _This file lists the main changes through all versions of YOURLS.  
 For a much more detailed list, simply refer to [commit messages](https://github.com/YOURLS/YOURLS/commits/master)._
 
+1.10.6
+---
+- fixed: the version number. It's just `1.10.5`, without the `-dev`, as `1.10.5` should have been. Sorry :)
+
+
+1.10.5
+---
+
+- fixed and improved: numerous misc security hardenings (#4111, #4122, #4119, #4139, #4141, #4145, #4147, #4142)
+  - `md5` now phased out
+  - extensive use of `hash_equals()` to beat time based attacks
+  - implementation of cookie prefixes
+  - `YOURLS_COOKIEKEY` now unpredictable when not user defined
+  - remote title fetching restricted on a public install when shortening private IP
+  - prevent unauthenticated file inclusion in Pages under very unlikely conditions
+  - better support for proxies  
+- improved: unit tests, to handle more scenarios and make tests independent of constants, to eventually deprecate some constants (#4124)
+- changed: Return `HTTP 409 Conflict` instead of `400` when a duplicate long URL is rejected (#4133)
+
+
+1.10.4
+---
+- fixed: Prevent [XSS](https://github.com/YOURLS/YOURLS/security/advisories/GHSA-5h77-88j3-r659) in stat pages through referrers (#4107)
+- added: Localization support for date and time display (#4054)
+- improved: Improve shunt filters (#4058)
+- fixed: Notice overlapping logo in admin panel (#4069)
+- fixed: Flag password file as user auth from environment variables (#4066)
+- added: Filter SQL queries (#4064)
+- improved: Improve debug functions and logic (#4089)
+- improved: Make tests debugging easier (#4104)
+
+1.10.3
+---
+- added: testing on PHP 8.5 & 8.6 (#4036)
+- added: function to get reserved URLs from global variable (#3999)
+- added: database index on long URLs, for faster searches (#4013)
+- added: `$context` parameter of `yourls_get_db()` (#4020)
+- changed: hide referrers on public statistics page by default (#4005)
+- changed: set the infos cache of the keyword after a url is added/updated/deleted (#4008)
+- changed: fix hover-actions in tables for screen reader users (#4025)
+- changed: confirm link deletion with a modal dialog (#3932)
+- fixed: upgrade spatie/array-to-xml to address deprecation warnings in newer PHP version (#4037)
+- fixed: filtering for links with more than 0 clicks (#3977)
+- fixed: case-sensitivity in admin search (#3997)
+- fixed: missing or invalid reserved URL configuration causing crash (#3999)
+- fixed: handling of invalid charsets on remote sites (#4007)
+- fixed: preserve backslashes in URLs (#4000)
+- fixed: validate JSONP callback names (#4030)
+- fixed: enhance configuration template formatting (#3994)
+- fixed: minor cleanup (#3979, #3984, #3988)
+
+1.10.2
+---
+- fixed: `admin/tools.php` now uses `yourls_get_nonce_life()` (#3906)
+- fixed: "Display 1 to 0 of 0 URLs" on admin list page (#3910)
+- fixed: replace deprecated `get_all_options` filter with an action (#3683)
+- fixed: defer loading text domain after plugins (#3679)
+- removed: Gandi references (#3929)
+
+1.10.1
+---
+- fixed: sandbox exceptions when disabling plugins (#3893)
+- fixed: stats date calculation are now correct (#3895)
+- fixed: unexpected warning raised on login page
+- removed: unsupported installation cases with Composer
+
+1.10.0
+---
+- added: Support PHP 8.3 & 8.4
+- removed: Support for PHP prior to 8.1 which is now minimal requirement
+- changed: Ensure all `statusCode`/`errorCode` API values are strings (#3756)
+- fixed: Results with 0 clicks on search (#3589)
+- fixed: Upgrade Aura.SQL to fix PHP 8.4 compatibility (#3852)
+- fixed: login page accessibility (#3660)
+- fixed: MySQL 8+ compatibility (#3828)
+- changed: Upgrade dependencies
+- changed: Update GeoIP DB
+- changed: Update certificates
+
+1.9.2
+---
+- added: Support PHP 8.2 (#3474)
+- improved: Googlebot indexing now filterable for plugins, for your SEO needs (#3517)
+- improved: Use safe sandbox for all included files (#3478)
+- fixed: bookmarklets with URL containing special chars (#3527)
+- fixed: unwanted cookies could interfere with YOURLS (#3516)
+- fixed: cosmetic bugs in the admin interface (#3485, #3431, #3518)
+- fixed: support usernames containing brackets (#3365)
+- updated: third party libs and binaries
+
+1.9.1
+---
+- fixed: error `Undefined constant "intval"` when upgrading (#3332)
+- fixed: warnings on PHP 8.1 (#3317)
+- fixed: incorrect HTTP status header with the API when shortening a duplicate (#3355)
+- fixed: no hyphen in random keywords (#3353)
+- added: required/suggested PHP extensions in composer.json (#3339)
+- updated: third party libs and binaries
+
+1.9
+---
+- removed : support for PHP prior to 7.4
+- improved: the API plugin with more plugin functions (#3281), a sandbox and a plugin uninstall procedure (#3282)
+- improved: inline documentation, [online documentation](https://docs.yourls.org/) and unit tests
+- improved: concurrency during mass shortening (#3233)
+- improved: minor security fixes - sanitize step name during upgrade (#3055),
+    nonce on the logout link (#3264), salt cookie with newer hash (#3278)
+- improved: Remove ozh/phpass library and use native PHP password_* functions (#3232)
+- added: more hooks in the admin view & search (#3265)
+- fixed: incorrect notice when "prefix and shorten" while not logged in (#3189)
+- fixed: UI sometimes not responsive after editing a URL (#3244)
+
+1.8.2
+---
+- fixed: display SVG logo for IE 11 (#2864)
+- fixed (again) : DB upgrade procedure (#2933)
+- fixed: cosmetic issue with Docker falsely warning about unencrypted password (#3040)
+- improved: minor security improvements - iframes clickjacking and login nonce (#3034), potential XSS (#3041)
+- improved: SSL support for proxies (#3044)
+- improved: inline documentation and unit tests
+- added: more filters in admin pages (#2912), HTTP requests (#2951), to deal with user defined consts (#3048)
+- added: documentation for API action "version" (#2957)
+
+1.8.1
+---
+- fixed: upgrade procedure with MySQL 8 & table names containing dashes (#2844, #2846) 
+- fixed: function to make public some pages on private installs (#2859)
+- added: `all` hook to debug YOURLS and plugins (#2860)
+- improved: plugin inline documentation
+
+1.8
+---
+- fixed: support for PHP 8
+- removed : support for PHP prior to 7.2
+- improved: IDN domain, and UTF8 URLs and titles (aka Number One Issue Since Day One)
+- improved: timezone management
+- improved: YOURLS UI and logo, now in SVG
+- improved: several little things
+- fixed: several little bugs
+
+1.7.9
+---
+- improved: compatibility of YOURLS with proxies and reversed proxies
+- improved: accept timestamped signature in API requests with [arbitrary hash](https://docs.yourls.org/guide/advanced/passwordless-api.html#use-other-hash-algorithms-than-md5)
+- improved: YOURLS pages are now located in `user/` and [documented](https://docs.yourls.org/guide/extend/pages.html)
+- improved: accessibility, with labels and aria tags in the main admin screen
+- fixed: various little things here and also there
+
+1.7.6
+---
+- improved: due to popular demand, "Random Keywords" is now a core plugin bundled with YOURLS
+- fixed: JSONP parameters now match the documentation, duh
+- fixed: various little things here and also there
+
+1.7.5
+---
+- fixed: long referrers or client name won't trigger errors
+- fixed: some little bugs
+
+1.7.4
+---
+- fixed: type juggling vulnerability in the API
+- improved: several little things and several little updates
+- dropped: PHP <= 5.5 support
+
+1.7.3
+---
+- improved: some little things
+- added: some hooks here and there to allow more pluginness
+- fixed: some little bugs
+- updated: jquery and some javascript stuff
+
+1.7.2
+---
+- improved: stat graphs, regarding accuracy and time zones
+- improved: navigation in the admin interface
+- improved: several little things
+- fixed: several little bugs
+- updated: all third party libs
+- dropped: PHP 5.2 support
+
+1.7.1
+---
+- added: compatibility with PHP 7
+- added: allow hooks with closures (see [Advanced Hook Syntax](https://docs.yourls.org/development/hooks.html))
+- improved: you can now search across all fields at once in the admin interface
+- improved: bookmarklets are now human readable in the PHP source, and minified on the fly
+- improved, still not perfect: support for URLs and page titles with encoded chars
+- fixed: timezone warnings
+- fixed: cookie mismatch preventing login when multiple YOURLS installs on subdomains of the same domain
+- fixed: lotsa bugs
+- improved: lotsa things
+
 1.7
 ---
 - added: support for PDO and MySQLi

@@ -18,8 +18,6 @@ body {
 	border-right:3px solid #2a85b3;
 	border-bottom:3px solid #2a85b3;
 	border-top:3px solid #2a85b3;
-	-moz-border-radius:20px;
-	-webkit-border-radius:20px;
 	border-radius:20px;
 }
 .hide-if-no-js {display: none;}
@@ -34,12 +32,15 @@ a, a:link, a:active, a:visited {
 a:hover {
 	text-decoration: underline;
 }
-h1 {height:50px;margin:0;float:right;max-width:500px;}
+h1 {margin:0;float:right;max-width:500px;}
 h1 a {text-align:right;font-size:20px;float:right;}
 h1 a, h1 a:link, h1 a:active, h1 a:visited {color:#2a85b3}
 h1 a:hover{text-decoration:none;}
 h1 a:hover span{text-decoration:underline;color:#88c0eb}
-
+#yourls-logo {
+    border:0px;
+    width:300px;
+}
 ul#admin_menu {
 	min-height:100px;
 	list-style-type:none;
@@ -61,12 +62,10 @@ code {
 }
 tt {
 	background:#ffc;
-	padding:0 2px;		
+	padding:0 2px;
 }
 
 input, textarea {
-	-moz-border-radius:3px;
-	-webkit-border-radius:3px;
 	border-radius:3px;
 }
 Input.text, select, textarea {
@@ -126,14 +125,32 @@ tr.edit-row  td {
 td.url small a{
 	color:#bbc;
 }
-body.desktop td.actions input,body.desktop  td.actions a {
-	visibility:hidden;
+/* Hide buttons visually but keep them accessible to screen readers */
+body.desktop td.actions input, body.desktop td.actions a {
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.2s ease;
+}
+td.timestamp span.timestamp {
+    display:none;
 }
 td.actions input.disabled, td.actions input.loading {
 	visibility:visible;
 }
+/* Show buttons on row hover */
 tr:hover td.actions input, tr:hover td.actions a {
-	visibility:visible;
+	opacity: 1;
+	pointer-events: auto;
+}
+/* Show buttons when any button in the actions cell receives focus */
+td.actions:focus-within input, td.actions:focus-within a {
+	opacity: 1;
+	pointer-events: auto;
+}
+/* Show all buttons when any element in the row receives focus (for keyboard nav through the entire row) */
+tr:focus-within td.actions input, tr:focus-within td.actions a {
+	opacity: 1;
+	pointer-events: auto;
 }
 td.actions .button {
 	font-family: Verdana, Arial;
@@ -142,8 +159,6 @@ td.actions .button {
 	font-weight: bold;
 	background-color: #FFFFFF;
 	border: 1px solid #88c0eb;
-	-moz-border-radius:3px;
-	-webkit-border-radius:3px;
 	border-radius:3px;
 	cursor:pointer;
 	height:22px;
@@ -170,16 +185,16 @@ td.actions .button.loading, #add-button.loading {
 	color:#cc7;
 }
 td.actions .button_share {
-	background:transparent url(../images/share.png) 2px center no-repeat;
+	background:transparent url(../images/share.svg) center no-repeat;
 }
 td.actions .button_edit {
-	background:transparent url(../images/pencil.png) 2px center no-repeat;
+	background:transparent url(../images/pencil.svg) center no-repeat;
 }
 td.actions .button_delete {
-	background:transparent url(../images/delete.png) 2px center no-repeat;
+	background:transparent url(../images/delete.svg) center no-repeat;
 }
 td.actions .button_stats {
-	background:transparent url(../images/chart_bar.png) 2px center no-repeat;
+	background:transparent url(../images/chart_bar.svg) center no-repeat;
 }
 #main_table tfoot th, #main_table tfoot th div {
 	font-size:10px;
@@ -197,7 +212,7 @@ td.actions .button_stats {
 	background:#efe;
 }
 #login {
-	width: 300px;
+	max-width: 300px;
 	margin: 200px auto 0px auto;
 }
 #login p{
@@ -215,13 +230,13 @@ td.actions .button_stats {
 	padding:0 0 5px 20px;
 }
 #login ul.error li {
-	background:transparent url(../images/cancel.png) top left no-repeat;
+	background:transparent url(../images/cancel.svg) top left no-repeat;
 }
 #login ul.warning li {
-	background:transparent url(../images/error.png) top left no-repeat;
+	background:transparent url(../images/error.svg) top left no-repeat;
 }
 #login ul.success li {
-	background:transparent url(../images/accept.png) top left no-repeat;
+	background:transparent url(../images/accept.svg) top left no-repeat;
 }
 .sub_wrap {
 	max-width:580px;
@@ -234,11 +249,10 @@ td.actions .button_stats {
 }
 a.bookmarklet {
 	border:2px solid #2a85b3;
-	-moz-border-radius:3px;
-	-webkit-border-radius:3px;
 	border-radius:3px;
 	padding:5px 5px 5px 20px;
-	background:#eef url(../images/favicon.gif) 2px center no-repeat;
+	background:#eef url(../images/favicon.svg) 2px center no-repeat;
+	padding-left:30px;
 	margin:3px;
 	display:inline-block;
 }
@@ -255,34 +269,26 @@ a.bookmarklet:hover {
 	background:white;
 	margin:0 auto;
 	max-width:950px;
-	-moz-border-radius:10px;
-	-webkit-border-radius:10px;
 	border-radius:10px;
 	border:2px solid #2a85b3;
-	-moz-border-radius-bottomleft:30px;
-	-moz-border-radius-bottomright:30px;
-	-webkit-border-bottom-left-radius:25px;
-	-webkit-border-bottom-right-radius:25px;
 	border-bottom-left-radius:25px;
 	border-bottom-right-radius:25px;
 }
 #footer p a {
-	background:#fff url(../images/favicon.gif) 2px center no-repeat;
-	padding-left:20px;
+	background:#fff url(../images/favicon.svg) 2px center no-repeat;
+	padding-left:30px;
 }
 
 .notice {
 	border:1px solid #2a85b3;
 	background: #F3FAFD;
-	-moz-border-radius:6px;
-	-webkit-border-radius:6px;
 	border-radius:6px;
 	width:70%;
 	margin-left:15%;
 	padding-left:10px;
 	margin-bottom:5px;
+	clear: both;
 }
-
 
 .jquery-notify-bar {
   width:100%;
@@ -298,11 +304,7 @@ a.bookmarklet:hover {
   padding:20px 0px;
   border-bottom:1px solid #bbb;
   filter:alpha(opacity=95);
-  -moz-opacity:0.95;
-  -khtml-opacity:0.95;
   opacity:0.95;
-  -moz-box-shadow: 0 1px 5px rgba(0,0,0,0.5);
-  -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
   text-shadow: 0 1px 1px rgba(0,0,0,0.1);
 }
 .jquery-notify-bar.error ,.jquery-notify-bar.fail {
@@ -310,10 +312,10 @@ a.bookmarklet:hover {
   background-color:#fdd;
 }
 .jquery-notify-bar.error span,.jquery-notify-bar.fail span{
-	background:transparent url("../images/error.png") no-repeat left center;
+	background:transparent url("../images/error.svg") no-repeat left center;
 	padding-left:20px;
 }.jquery-notify-bar.success span{
-	background:transparent url("../images/accept.png") no-repeat left center;
+	background:transparent url("../images/accept.svg") no-repeat left center;
 	padding-left:20px;
 }
 .jquery-notify-bar.success {
@@ -328,3 +330,59 @@ a.bookmarklet:hover {
 tr.plugin.active a{ font-weight:bolder;}
 body.desktop tr.plugin td.plugin_desc small{ visibility:hidden;}
 tr:hover.plugin td.plugin_desc small{ visibility:visible;}
+
+#delete-confirm-dialog {
+    background-color: #ffffff;
+    width: 50em;
+    height: 19em;
+    padding: 0px;
+    border: 3px solid #2a85b3;
+    border-radius: 20px;
+}
+#delete-confirm-dialog > div[name="dialog_title"] {
+    background-color: #c7e7ff;
+    font-size: 20px;
+    color: #026090;
+    text-align: center;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    border-start-start-radius: 17px 17px;
+    border-start-end-radius: 17px 17px;
+}
+#delete-confirm-dialog div.confirm-message {
+    background-color: #ffffff;
+    width: calc(50em - 4em);
+    height: calc(20em - 50px - 5em - 2em + 6px);
+    float: none;
+    text-align: left;
+    padding: 1em 2em;
+    overflow: hidden;
+}
+#delete-confirm-dialog div.confirm-message ul {
+    border-left: 5px solid #026090;
+    list-style-type: none;
+    padding: 0 1em;
+}
+#delete-confirm-dialog div.confirm-message ul li {
+    margin-bottom: 0.5em;
+}
+#delete-confirm-dialog div.confirm-message ul li span {
+    border: 1px solid #c7e7ff;
+    border-radius: 3px;
+    padding: 1px 5px;
+    color:#333;
+}
+#delete-confirm-dialog div.button-group {
+    background-color: #e3f3ff;
+    width: calc(50em - 4em);
+    height: 2em;
+    float: none;
+    text-align: right;
+    padding: 1em 2em;
+    border-end-start-radius: 17px 17px;
+    border-end-end-radius: 17px 17px;
+}
+#delete-confirm-dialog::backdrop {
+    background-color: #666;
+    opacity: 80%;
+}
