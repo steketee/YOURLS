@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  yourls:
+    image: yourls:1.10.6-apache
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      YOURLS_SITE: ${YOURLS_SITE:-http://localhost:8080}
+      YOURLS_USER: ${YOURLS_USER:-admin}
+      YOURLS_PASS: ${YOURLS_PASS:-changeme}
+      YOURLS_DB_HOST: db
+      YOURLS_DB_USER: yourls
+      YOURLS_DB_PASS: ${YOURLS_DB_PASS:-yourls_pass}
+      YOURLS_DB_NAME: yourls
+      YOURLS_DB_PREFIX: yourls_
+    depends_on:
+      - db
+    volumes:
+      - ./user:/var/www/html/user
+
+  db:
+    image: mariadb:11
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpass}
+      MYSQL_DATABASE: yourls
+      MYSQL_USER: yourls
+      MYSQL_PASSWORD: ${YOURLS_DB_PASS:-yourls_pass}
+    volumes:
+      - yourls-db:/var/lib/mysql
+
+volumes:
+  yourls-db:
